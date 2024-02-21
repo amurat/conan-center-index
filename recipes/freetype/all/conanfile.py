@@ -33,7 +33,7 @@ class FreetypeConan(ConanFile):
     default_options = {
         "shared": False,
         "fPIC": True,
-        "with_png": True,
+        "with_png": False,
         "with_zlib": True,
         "with_bzip2": True,
         "with_brotli": True,

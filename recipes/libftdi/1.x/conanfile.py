@@ -25,6 +25,7 @@ class LibFtdiConan(ConanFile):
             "enable_cpp_wrapper" : [True, False],
             "build_eeprom_tool"  : [True, False],
             "use_streaming"      : [True, False],
+            "commercial"         : [True, False],
     }
     default_options = {
             "shared": False,
@@ -32,6 +33,7 @@ class LibFtdiConan(ConanFile):
             "enable_cpp_wrapper": True,
             "build_eeprom_tool" : False,
             "use_streaming"     : True,
+            "commercial"        : False,
     }
 
     def export_sources(self):
@@ -50,7 +52,8 @@ class LibFtdiConan(ConanFile):
             self.license = ("LGPL-2.1-only", "GPL-2.0-only")
         else:
             self.license = "LGPL-2.1-only"
-
+        if self.options.commercial:
+            self.license = "commercial"
     def layout(self):
         cmake_layout(self, src_folder="src")
 
@@ -59,7 +62,7 @@ class LibFtdiConan(ConanFile):
         self.requires("libusb/1.0.26", transitive_headers=True, transitive_libs=True)
         if self.options.enable_cpp_wrapper:
             # boost/shared_ptr.hpp is used in public ftdi.hpp
-            self.requires("boost/1.83.0", transitive_headers=True)
+            self.requires("boost/1.74.0", transitive_headers=True)
 
     def validate(self):
         if is_msvc(self) and self.options.use_streaming:

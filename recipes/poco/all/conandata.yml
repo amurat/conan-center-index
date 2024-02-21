@@ -1,4 +1,6 @@
 sources:
+  "1.10.1":
+    url: "https://github.com/pocoproject/poco/archive/poco-1.10.1-release.tar.gz"
   "1.13.1":
     url: "https://github.com/pocoproject/poco/archive/poco-1.13.1-release.tar.gz"
     sha256: "8accf6c6ebb9ae686e7c8e2390a35beaab08d0ca1abda537cc2d0b7ab9296be5"

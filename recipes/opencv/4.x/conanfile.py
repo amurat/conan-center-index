@@ -189,11 +189,11 @@ class OpenCVConan(ConanFile):
         # imgcodecs module options
         "with_avif": False,
         "with_jpeg": "libjpeg",
-        "with_png": True,
-        "with_tiff": True,
-        "with_jpeg2000": "jasper",
+        "with_png": False,
+        "with_tiff": False,
+        "with_jpeg2000": "openjpeg",
         "with_openexr": True,
-        "with_webp": True,
+        "with_webp": False,
         "with_gdal": False,
         "with_gdcm": False,
         "with_imgcodec_hdr": False,
@@ -1119,7 +1119,7 @@ class OpenCVConan(ConanFile):
         elif self.options.get_safe("with_jpeg2000") == "openjpeg":
             self.requires("openjpeg/2.5.0")
         if self.options.get_safe("with_png"):
-            self.requires("libpng/1.6.40")
+            self.requires("libpng/1.6.37")
         if self.options.get_safe("with_openexr"):
             self.requires("openexr/3.2.1")
         if self.options.get_safe("with_tiff"):

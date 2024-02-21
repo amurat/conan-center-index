@@ -32,7 +32,8 @@ class QtConan(ConanFile):
     topics = ("ui", "framework")
     url = "https://github.com/conan-io/conan-center-index"
     homepage = "https://www.qt.io"
-    license = "LGPL-3.0-only"
+    #license = "LGPL-3.0-only"
+    license = "commercial"
     package_type = "library"
     settings = "os", "arch", "compiler", "build_type"
     options = {
@@ -89,7 +90,7 @@ class QtConan(ConanFile):
         "with_glib": False,
         # "with_libiconv": True, # QTBUG-84708
         "with_doubleconversion": True,
-        "with_freetype": True,
+        "with_freetype": False,
         "with_fontconfig": True,
         "with_icu": True,
         "with_harfbuzz": False,

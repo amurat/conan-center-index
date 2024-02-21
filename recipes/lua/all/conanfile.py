@@ -26,7 +26,7 @@ class LuaConan(ConanFile):
     default_options = {
         "shared": False,
         "fPIC": True,
-        "compile_as_cpp": False,
+        "compile_as_cpp": True,
     }
 
     def export_sources(self):

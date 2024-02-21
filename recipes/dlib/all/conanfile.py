@@ -36,15 +36,15 @@ class DlibConan(ConanFile):
     default_options = {
         "shared": False,
         "fPIC": True,
-        "with_gif": True,
+        "with_gif": False,
         "with_jpeg": True,
         "with_png": True,
         "with_webp": True,
-        "with_sqlite3": True,
+        "with_sqlite3": False,
         "with_sse2": "auto",
         "with_sse4": "auto",
         "with_avx": "auto",
-        "with_openblas": True,
+        "with_openblas": False,
     }
 
     @property
@@ -92,7 +92,7 @@ class DlibConan(ConanFile):
         if self.options.with_jpeg:
             self.requires("libjpeg/9e")
         if self.options.with_png:
-            self.requires("libpng/1.6.40")
+            self.requires("libpng/1.6.37")
         if self.options.get_safe("with_webp"):
             self.requires("libwebp/1.3.2")
         if self.options.with_sqlite3:
