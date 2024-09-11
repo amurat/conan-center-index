@@ -1,0 +1,1 @@
+. "/Users/AMurat/Development/conan-center-index/recipes/gfortran/all/test_package/conanrunenv-release-armv8.sh"

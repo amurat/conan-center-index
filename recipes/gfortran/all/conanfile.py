@@ -19,7 +19,8 @@ class GFortranConan(ConanFile):
     deprecated = "gcc"
 
     def validate(self):
-        if self.settings.arch != "x86_64":
+        print (self.settings.arch)
+        if (self.settings.arch != "x86_64" and self.settings.arch != "armv8"):
             raise ConanInvalidConfiguration("No binaries available for the architecture '{}'.".format(self.settings.arch))
         if str(self.settings.os) not in ("Windows", "Linux", "Macos"):
             raise ConanInvalidConfiguration("No binaries available for the OS '{}'.".format(self.settings.os))
@@ -31,10 +32,12 @@ class GFortranConan(ConanFile):
     def build(self):
         if self.settings.os == "Windows":
             filename =  os.path.join(self.build_folder, "GCC-10.2.0-crt-8.0.0-with-ada-20201019.7z")
-            download(self, **self.conan_data["sources"][self.version][str(self.settings.os)]["x86_64"], filename=filename)
+            arch = str(self.settings.arch)
+            download(self, **self.conan_data["sources"][self.version][str(self.settings.os)][arch], filename=filename)
             self.run(f"7z x {filename}")
         else:
-            get(self, **self.conan_data["sources"][self.version][str(self.settings.os)]["x86_64"],
+            arch = str(self.settings.arch)
+            get(self, **self.conan_data["sources"][self.version][str(self.settings.os)][arch],
                     destination=self.build_folder, strip_root=True)
 
     @property

@@ -12,3 +12,8 @@ sources:
       "x86_64":
         url: "https://downloads.sourceforge.net/project/hpc/hpc/g95/gfortran-10.2-bin.tar.gz"
         sha256: "2de46f571eefc2b544db4ed6c958c78a5e3e78c4b4b5daab38aabc1b08dd5666"
+  "12.1":
+    "Macos":
+      "armv8":
+        url: "https://downloads.sourceforge.net/project/hpc/hpc/g95/gfortran-12.1-m1-bin.tar.gz"
+        sha256: "218d720a7614d528079dc00255dc05699ecdcedeeb7d9f83144ef3ed1f04513e"

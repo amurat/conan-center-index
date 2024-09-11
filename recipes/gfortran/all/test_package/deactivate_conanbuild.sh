@@ -1,0 +1,1 @@
+. "/Users/AMurat/Development/conan-center-index/recipes/gfortran/all/test_package/deactivate_conanbuildenv-release-armv8.sh"
