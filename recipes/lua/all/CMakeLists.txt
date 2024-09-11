@@ -103,6 +103,6 @@ IF (NOT DEFINED SKIP_INSTALL_HEADERS)
     )
     # If using C++, don't install extern "C" wrapper.
     IF (NOT COMPILE_AS_CPP)
-        INSTALL(FILES ${SOURCE_DIR}/src/lua.hpp DESTINATION include)
+        INSTALL(FILES ${SOURCE_DIR}/etc/lua.hpp DESTINATION include)
     ENDIF ()
 ENDIF ()
