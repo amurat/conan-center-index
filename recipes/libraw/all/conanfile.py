@@ -98,6 +98,8 @@ class LibRawConan(ConanFile):
             if not self.options.shared:
                 self.cpp_info.defines.append("LIBRAW_NODLL")
 
+        self.cpp_info.defines.append("_USE_MATH_DEFINES")
+
         if self.options.with_jpeg == "libjpeg":
             self.cpp_info.requires.append("libjpeg::libjpeg")
         elif self.options.with_jpeg == "libjpeg-turbo":
