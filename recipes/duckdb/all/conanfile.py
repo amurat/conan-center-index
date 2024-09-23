@@ -1,7 +1,7 @@
 from conan import ConanFile
 from conan.errors import ConanInvalidConfiguration
 from conan.tools.files import apply_conandata_patches, export_conandata_patches, get, copy, rm, rmdir, replace_in_file
-from conan.tools.build import check_min_cppstd
+from conan.tools.build import check_min_cppstd, cross_building
 from conan.tools.scm import Version
 from conan.tools.microsoft import is_msvc
 from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain, cmake_layout
@@ -76,6 +76,8 @@ class DuckdbConan(ConanFile):
             del self.options.fPIC
         if Version(self.version) >= "0.9.0":
             del self.options.with_parquet
+        if Version(self.version) >= "1.1.0":
+            del self.options.with_odbc
 
     def configure(self):
         if self.options.shared:
@@ -86,7 +88,7 @@ class DuckdbConan(ConanFile):
 
     def requirements(self):
         # FIXME: duckdb vendors a bunch of deps by modify the source code to have their own namespace
-        if self.options.with_odbc:
+        if self.options.get_safe("with_odbc"):
             self.requires("odbc/2.3.11")
         if self.options.with_httpfs:
             self.requires("openssl/[>=1.1 <4]")
@@ -108,7 +110,7 @@ class DuckdbConan(ConanFile):
         tc.variables["DUCKDB_MINOR_VERSION"] = Version(self.version).minor
         tc.variables["DUCKDB_PATCH_VERSION"] = Version(self.version).patch
         tc.variables["DUCKDB_DEV_ITERATION"] = 0
-
+        tc.variables["OVERRIDE_GIT_DESCRIBE"] = f"v{self.version}"
         if "with_parquet" in self.options:
             tc.variables["BUILD_PARQUET_EXTENSION"] = self.options.with_parquet
 
@@ -148,7 +150,8 @@ class DuckdbConan(ConanFile):
             tc.variables["BUILD_EXCEL_EXTENSION"] = self.options.with_excel
             tc.variables["BUILD_SQLSMITH_EXTENSION"] = self.options.with_sqlsmith
 
-        tc.variables["BUILD_ODBC_DRIVER"] = self.options.with_odbc
+        if "self.options" in self.options:
+            tc.variables["BUILD_ODBC_DRIVER"] = self.options.with_odbc
         tc.variables["FORCE_QUERY_LOG"] = self.options.with_query_log
         tc.variables["BUILD_SHELL"] = self.options.with_shell
         tc.variables["DISABLE_THREADS"] = not self.options.with_threads
@@ -159,6 +162,8 @@ class DuckdbConan(ConanFile):
         tc.variables["ENABLE_UBSAN"] = False
         if is_msvc(self) and not self.options.shared:
             tc.preprocessor_definitions["DUCKDB_API"] = ""
+        if Version(self.version) >= "0.10.0" and cross_building(self):
+            tc.variables["DUCKDB_EXPLICIT_PLATFORM"] = f"{self.settings.os}_{self.settings.arch}"
         tc.generate()
 
         dpes = CMakeDeps(self)
@@ -211,6 +216,10 @@ class DuckdbConan(ConanFile):
             ]
             if Version(self.version) >= "0.6.0":
                 self.cpp_info.libs.append("duckdb_fsst")
+            if Version(self.version) >= "0.10.0":
+                self.cpp_info.libs.append("duckdb_skiplistlib")
+            if Version(self.version) >= "0.10.3":
+                self.cpp_info.libs.append("duckdb_yyjson")
 
             if self.options.with_autocomplete:
                 self.cpp_info.libs.append("autocomplete_extension")
@@ -228,7 +237,8 @@ class DuckdbConan(ConanFile):
                 self.cpp_info.libs.append("visualizer_extension")
             if self.options.with_httpfs:
                 self.cpp_info.libs.append("httpfs_extension")
-            if Version(self.version) >= "0.6.0" and self.settings.os == "Linux":
+            if (Version(self.version) >= "0.6.0" and self.settings.os == "Linux" and
+                (Version(self.version) < "0.10.1" or self.settings.arch == "x86_64")):
                 self.cpp_info.libs.append("jemalloc_extension")
             if self.options.with_json:
                 self.cpp_info.libs.append("json_extension")
@@ -244,6 +254,9 @@ class DuckdbConan(ConanFile):
 
         if self.settings.os == "Windows":
             self.cpp_info.system_libs.append("ws2_32")
+            if Version(self.version) >= "0.10.0":
+                self.cpp_info.system_libs.extend(["rstrtmgr", "bcrypt"])
+
 
         if self.options.with_shell:
             binpath = os.path.join(self.package_folder, "bin")
