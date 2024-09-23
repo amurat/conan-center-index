@@ -32,6 +32,7 @@ class DlibConan(ConanFile):
         "with_sse4": [True, False, "auto"],
         "with_avx": [True, False, "auto"],
         "with_openblas": [True, False],
+        "with_lapack": [True, False],
     }
     default_options = {
         "shared": False,
@@ -45,6 +46,7 @@ class DlibConan(ConanFile):
         "with_sse4": "auto",
         "with_avx": "auto",
         "with_openblas": False,
+        "with_lapack": False,
     }
 
     @property
@@ -163,7 +165,7 @@ class DlibConan(ConanFile):
             tc.variables["DLIB_WEBP_SUPPORT"] = self.options.with_webp
         tc.variables["DLIB_LINK_WITH_SQLITE3"] = self.options.with_sqlite3
         tc.variables["DLIB_USE_BLAS"] = True    # FIXME: all the logic behind is not sufficiently under control
-        tc.variables["DLIB_USE_LAPACK"] = True  # FIXME: all the logic behind is not sufficiently under control
+        tc.variables["DLIB_USE_LAPACK"] = False  # FIXME: all the logic behind is not sufficiently under control
         tc.variables["DLIB_USE_CUDA"] = False   # TODO: add with_cuda option?
         tc.variables["DLIB_PNG_SUPPORT"] = self.options.with_png
         tc.variables["DLIB_GIF_SUPPORT"] = self.options.with_gif
