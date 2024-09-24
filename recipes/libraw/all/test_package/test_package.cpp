@@ -1,8 +1,8 @@
-#include <libraw/libraw.h>
+//#include <libraw/libraw.h>
 #include <iostream>
 
 int main()
 {
-    std::cout << libraw_version() << "\n";
+ //   std::cout << libraw_version() << "\n";
     return 0;
 }

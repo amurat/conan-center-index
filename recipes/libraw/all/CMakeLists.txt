@@ -58,6 +58,8 @@ if (LIBRAW_WITH_JASPER)
     target_link_libraries(raw PRIVATE Jasper::Jasper)
 endif ()
 
+target_compile_definitions(raw PRIVATE _USE_MATH_DEFINES)
+
 include(GNUInstallDirs)
 install(DIRECTORY "${LIBRAW_SRC_DIR}/libraw" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 install(
