@@ -49,5 +49,5 @@ class ziplibRecipe(ConanFile):
         cmake.install()
 
     def package_info(self):
-        self.cpp_info.libs = ["ziplib"]
+        self.cpp_info.libs = ["ziplib", "zipliblzma"]
 
