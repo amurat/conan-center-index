@@ -121,6 +121,9 @@ class CMakeConan(ConanFile):
             # the windows SDK available in the system
             if is_msvc(self) and not self.conf.get("tools.cmake.cmaketoolchain:system_version"):
                 tc.variables["CMAKE_SYSTEM_VERSION"] = "10.0"
+
+            tc.extra_exelinkflags.append("-static-libstdc++")
+            
             tc.generate()
             tc = CMakeDeps(self)
             # CMake try_compile failure: https://github.com/conan-io/conan-center-index/pull/16073#discussion_r1110037534
