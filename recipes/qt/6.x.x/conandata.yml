@@ -64,6 +64,10 @@ sources:
       - "https://ftp.jaist.ac.jp/pub/qtproject/archive/qt/6.5/6.5.3/single/qt-everywhere-src-6.5.3.tar.xz"
       - "https://ftp.yz.yamagata-u.ac.jp/pub/qtproject/archive/qt/6.5/6.5.3/single/qt-everywhere-src-6.5.3.tar.xz"
     sha256: "7cda4d119aad27a3887329cfc285f2aba5da85601212bcb0aea27bd6b7b544cb"
+  "6.4.2":
+    url:
+      - "https://download.qt.io/archive/qt/6.4/6.4.2/single/qt-everywhere-src-6.4.2.tar.xz"
+      - "https://mirrors.ustc.edu.cn/qtproject/archive/qt/6.2/6.2.4/single/qt-everywhere-src-6.2.4.tar.xz"
 patches:
   "6.7.1":
     - "base_path": "qtwebengine"

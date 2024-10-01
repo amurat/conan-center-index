@@ -92,10 +92,10 @@ class QtConan(ConanFile):
         "with_pcre2": True,
         "with_glib": False,
         "with_doubleconversion": True,
-        "with_freetype": True,
+        "with_freetype": False,
         "with_fontconfig": True,
         "with_icu": True,
-        "with_harfbuzz": True,
+        "with_harfbuzz": False,
         "with_libjpeg": False,
         "with_libpng": True,
         "with_sqlite3": True,
@@ -437,7 +437,7 @@ class QtConan(ConanFile):
             self.requires("md4c/0.4.8")
 
     def build_requirements(self):
-        self.tool_requires("cmake/[>=3.21.1 <4]")
+        #self.tool_requires("cmake/[>=3.21.1 <4]")
         self.tool_requires("ninja/[>=1.12 <2]")
         if not self.conf.get("tools.gnu:pkg_config", check_type=str):
             self.tool_requires("pkgconf/[>=2.2 <3]")
