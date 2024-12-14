@@ -17,3 +17,8 @@ sources:
   "2.0.6":
     url: "https://sourceforge.net/projects/libjpeg-turbo/files/2.0.6/libjpeg-turbo-2.0.6.tar.gz"
     sha256: "d74b92ac33b0e3657123ddcf6728788c90dc84dcb6a52013d758af3c4af481bb"
+patches:
+  "3.0.3":
+    - patch_file: "patches/3.0.3/jpegcrop.patch"
+  "3.0.2":
+    - patch_file: "patches/3.0.2/jpegcrop.patch"

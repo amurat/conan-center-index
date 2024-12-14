@@ -1,0 +1,29 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index ff9c9c27..452b171c 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -767,6 +767,9 @@ if(WITH_TURBOJPEG)
+   endif()
+ endif()
+ 
++#crop
++add_library(jpegcrop cdjpeg.c rdswitch.c transupp.c)
++
+ if(WIN32)
+   set(USE_SETMODE "-DUSE_SETMODE")
+ endif()
+@@ -1814,6 +1817,14 @@ install(EXPORT ${CMAKE_PROJECT_NAME}Targets
+   DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${CMAKE_PROJECT_NAME}
+   COMPONENT lib)
+ 
++#crop
++install(TARGETS jpegcrop DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT lib)
++
++install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/cdjpeg.h 
++  ${CMAKE_CURRENT_SOURCE_DIR}/jinclude.h
++  ${CMAKE_CURRENT_SOURCE_DIR}/cderror.h
++  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR} COMPONENT include)
++
+ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/jconfig.h
+   ${CMAKE_CURRENT_SOURCE_DIR}/jerror.h ${CMAKE_CURRENT_SOURCE_DIR}/jmorecfg.h
+   ${CMAKE_CURRENT_SOURCE_DIR}/jpeglib.h
